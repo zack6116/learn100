@@ -1,5 +1,6 @@
 import { getConcept } from "@/data/track";
-import { connection } from "next/server";
+
+export const dynamic = "force-static";
 
 type TutorConfig = {
   provider: "doubao" | "openai";
@@ -43,7 +44,6 @@ function tutorConfig(): TutorConfig | null {
 }
 
 export async function GET() {
-  await connection();
   const config = tutorConfig();
   if (!config) {
     return Response.json({
@@ -74,7 +74,6 @@ type Body = {
 };
 
 export async function POST(request: Request) {
-  await connection();
   const config = tutorConfig();
   if (!config?.model) {
     return Response.json({ ok: false, mode: "script" });
